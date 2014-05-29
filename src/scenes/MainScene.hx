@@ -1,14 +1,24 @@
+package scenes;
+
 import com.haxepunk.Scene;
 import com.haxepunk.HXP;
-import Snowflake;
+import com.haxepunk.utils.Key;
+import com.haxepunk.utils.Input;
+import entities.Snowflake;
 
 class MainScene extends Scene
 {
 
-	private var spawnTimer : Float;
 
-	public override function begin()
+	private var spawnTimer : Float;
+	private var _isMoving : Bool;
+
+	public var ismoving : Bool;
+
+	public override function new()
 	{
+		super();
+		_isMoving = true;
 
 	}
 
@@ -18,6 +28,18 @@ class MainScene extends Scene
 		if (spawnTimer < 0)
 		{
 			spawn();
+		}
+
+		if (Input.mousePressed)
+		{
+			if (_isMoving)
+			{
+				_isMoving = false;
+			}
+			else
+			{
+				_isMoving = true;
+			}
 		}
 
 		super.update();
@@ -37,4 +59,6 @@ class MainScene extends Scene
 
 
 	}
+
+	private inline function get_ismoving():Bool { return _isMoving; };
 }

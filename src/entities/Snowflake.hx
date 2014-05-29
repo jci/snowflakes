@@ -1,7 +1,11 @@
+package entities;
+
 import com.haxepunk.Entity;
 import com.haxepunk.Graphic;
 import com.haxepunk.graphics.Image;
 import com.haxepunk.HXP;
+import com.haxepunk.Scene;
+import scenes.MainScene;
 
 class Snowflake extends Entity
 {
@@ -57,6 +61,9 @@ class Snowflake extends Entity
 
 	public override function update()
 	{
+
+		var ismoving : Bool;
+
 		
 		var _image	: Image;
 		
