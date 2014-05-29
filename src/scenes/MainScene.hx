@@ -57,7 +57,7 @@ class MainScene extends Scene
 	//	if (ismoving)
 //		{
 			add(new Snowflake(_x,_y));
-			spawnTimer = 0.05;
+			spawnTimer = 0.1;
 //		}
 
 
