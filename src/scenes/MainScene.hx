@@ -11,14 +11,14 @@ class MainScene extends Scene
 
 
 	private var spawnTimer : Float;
-	private var _isMoving : Bool;
-
 	public var ismoving : Bool;
 
 	public override function new()
 	{
+
+		ismoving = true;
 		super();
-		_isMoving = true;
+
 
 	}
 
@@ -32,13 +32,13 @@ class MainScene extends Scene
 
 		if (Input.mousePressed)
 		{
-			if (_isMoving)
+			if (ismoving)
 			{
-				_isMoving = false;
+				ismoving = false;
 			}
 			else
 			{
-				_isMoving = true;
+				ismoving = true;
 			}
 		}
 
@@ -53,12 +53,14 @@ class MainScene extends Scene
 
 		_x = Math.random()*HXP.width;
 		_y = 0 - HXP.halfHeight/3;
-
-		add(new Snowflake(_x,_y));
-		spawnTimer = 0.1;
+	
+	//	if (ismoving)
+//		{
+			add(new Snowflake(_x,_y));
+			spawnTimer = 0.05;
+//		}
 
 
 	}
 
-	private inline function get_ismoving():Bool { return _isMoving; };
 }

@@ -10,7 +10,6 @@
 	<window orientation="portrait" vsync="true" antialiasing="0" if="cpp" />
 
 	<source path="src" />
-	<source path="src/entities" />
 
 	<haxelib name="HaxePunk" />
 

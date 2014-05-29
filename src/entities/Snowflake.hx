@@ -63,7 +63,14 @@ class Snowflake extends Entity
 	{
 
 		var ismoving : Bool;
+		var _scene : MainScene = cast( HXP.scene, MainScene);
 
+		ismoving = _scene.ismoving;
+
+		if (!ismoving)
+		{
+			return;
+		}
 		
 		var _image	: Image;
 		
