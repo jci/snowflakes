@@ -5,8 +5,19 @@ import com.haxepunk.HXP;
 import com.haxepunk.utils.Key;
 import com.haxepunk.utils.Input;
 import entities.Snowflake;
+import com.haxepunk.nape.NapeScene;
+import nape.geom.Vec2;
+import nape.space.Space;
+import nape.phys.Body;
+import nape.phys.BodyList;
+import nape.phys.BodyType;
+import nape.shape.Polygon;
+import nape.util.Debug;
+import nape.util.BitmapDebug;
 
-class MainScene extends Scene
+
+
+class MainScene extends NapeScene
 {
 
 
@@ -16,8 +27,27 @@ class MainScene extends Scene
 	public override function new()
 	{
 
-		ismoving = true;
 		super();
+		ismoving = true;
+
+		var gravity = Vec2.weak(0,300);
+
+		var _w = HXP.stage.stageWidth;
+		var _h = HXP.stage.stageHeight;
+
+
+
+		var floor = new Body(BodyType.STATIC);
+
+		space = new Space(gravity);
+
+		floor.shapes.add(new Polygon(Polygon.box(_w,20)));
+		floor.position.setxy(_w,_h-50);
+		
+
+		floor.space = space;
+
+
 
 
 	}
@@ -32,14 +62,8 @@ class MainScene extends Scene
 
 		if (Input.mousePressed)
 		{
-			if (ismoving)
-			{
-				ismoving = false;
-			}
-			else
-			{
-				ismoving = true;
-			}
+			var bodyList = new BodyList();
+			bodyList.clear();
 		}
 
 		super.update();
@@ -50,17 +74,19 @@ class MainScene extends Scene
 	{
 		 var _x : Float;
 		 var _y : Float;
-
+		 var _entcount = HXP.scene.count;
+		 	
 		_x = Math.random()*HXP.width;
-		_y = 0 - HXP.halfHeight/3;
-	
-	//	if (ismoving)
-//		{
-			add(new Snowflake(_x,_y));
-			spawnTimer = 0.1;
-//		}
+		_y = -10;
+
+		if (_entcount < 50)
+		{	
+			addNapeEntity(new Snowflake(_x,_y));
+			spawnTimer = 0.05;
+		}
 
 
 	}
+
 
 }

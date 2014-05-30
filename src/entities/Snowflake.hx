@@ -8,8 +8,20 @@ import com.haxepunk.Scene;
 import com.haxepunk.tweens.motion.LinearMotion;
 import com.haxepunk.tweens.motion.CircularMotion;
 import scenes.MainScene;
+import com.haxepunk.nape.NapeEntity;
+import nape.geom.Vec2;
+import nape.space.Space;
+import nape.phys.Body;
+import nape.phys.BodyType;
+import nape.shape.Polygon;
+import nape.shape.Circle;
+import nape.util.ShapeDebug;
 
-class Snowflake extends Entity
+
+
+
+
+class Snowflake extends NapeEntity
 {
 	private	var _image : Image;
 	private var _myLayer : Int;
@@ -25,6 +37,9 @@ class Snowflake extends Entity
 	private var _flaketween : CircularMotion;
 	private var _originalX : Float;
 
+	private var _flickerTimer:Float;
+	private var flickering(get,null):Bool;
+
 	public function new(_x:Float, _y:Float)
 	{
 		super(x,y);
@@ -36,9 +51,6 @@ class Snowflake extends Entity
 
 		graphic = _image;
 
-		x=_x;
-		y=_y;
-
 		_myLayer = Std.int(HXP.random * 4);
 
 		_rotationSpeed = HXP.random * 2 +0.3;	
@@ -47,14 +59,6 @@ class Snowflake extends Entity
 		_size = (_myLayer +1)/4; 
 		_image.scale = _size;
 
-		if (HXP.random > 0.5)
-		{
-			_rotationDirection = true;
-		}
-		else
-		{
-			_rotationDirection = false;
-		}
 
 		layer = 4- _myLayer;
 		type = "snowflake";
@@ -72,17 +76,18 @@ class Snowflake extends Entity
 			_cradleDirection = false;
 		}
 
-		_flaketween = new CircularMotion();
-		_flaketween.x = x;
-		_flaketween.y = y;
+		_flickerTimer = 0;
+
+		var _body = new Body(BodyType.DYNAMIC);
+		_body.shapes.add(new Circle(_myLayer*4+5));
+		_body.position.setxy(_x,_y);
+		_body.isBullet = true;
+		_body.surfaceVel = new Vec2(0,-20);
+		_body.velocity = new Vec2(0,20);
+		//_body.angularVel = 0.5;
+		body = _body;
+
 		
-		_flaketween.setMotion(x,y,_cradleDistance,0,true,2);
-		addTween(_flaketween,true);	
-
-		_originalX = x;
-
-
-
 
 	}
 
@@ -90,49 +95,19 @@ class Snowflake extends Entity
 	public override function update()
 	{
 
-		super.update();	
-
-		var ismoving : Bool;
-		var _scene : MainScene = cast( HXP.scene, MainScene);
-
-		ismoving = _scene.ismoving;
-
-		if (!ismoving)
+		super.update();
+		if ( y > HXP.height	)
 		{
-			return;
+			HXP.scene.remove(this);
 		}
-		
-		var _image	: Image;
-		
-		y = y + _fallSpeed;
-
-		_image = cast(this.graphic,Image);
-
-		if (_rotationDirection)
-		{
-				_image.angle += _rotationSpeed;
-		}
-		else
-		{
-				_image.angle -= _rotationSpeed;
-		}
-
-
-		if (y > HXP.height + 10)
-		{
-			HXP.world.recycle(this);
-		}
-
-
-		x = _flaketween.x;
-
-		if (_flaketween.percent==1)
-		{
-			_flaketween.setMotion(_originalX,y,_cradleDistance,0,true,10);
-		}
-
-
 
 
 	}
+
+	private function get_flickering():Bool
+	{
+		if (_flickerTimer > 0)
+			return true;
+		return false;
+	}		
 }

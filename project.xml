@@ -2,7 +2,7 @@
 <project>
 	<meta title="snowflakes" package="com.lmgames.snowflakes" version="1.0.0" company="LMG" />
 
- 	<app file="snowflakes" main="Main" path="bin" />
+ 	<app file="snowflakes" main="Main" path="Export" />
 
 	<window fps="60" background="0x333333" />
 	<window width="640" height="480" resizable="true" unless="mobile" />
@@ -12,6 +12,8 @@
 	<source path="src" />
 
 	<haxelib name="HaxePunk" />
+	<haxelib name="HaxePunk-nape" />
+	<haxelib name="nape" />
 
 	<assets path="assets/graphics" rename="graphics" include="*.png|*.jpg" />
 	<assets path="assets/audio" rename="audio" include="*.mp3" if="flash" />

@@ -29,6 +29,8 @@
   <!-- haxelib libraries -->
   <haxelib>
     <library name="HaxePunk" />
+    <library name="nape" />
+    <library name="HaxePunk-nape" />
   </haxelib>
   <!-- Class files to compile (other referenced classes will automatically be included) -->
   <compileTargets>
