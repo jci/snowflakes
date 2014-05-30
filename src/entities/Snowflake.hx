@@ -37,8 +37,6 @@ class Snowflake extends NapeEntity
 	private var _flaketween : CircularMotion;
 	private var _originalX : Float;
 
-	private var _flickerTimer:Float;
-	private var flickering(get,null):Bool;
 
 	public function new(_x:Float, _y:Float)
 	{
@@ -60,7 +58,6 @@ class Snowflake extends NapeEntity
 		_image.scale = _size;
 
 
-		layer = 4- _myLayer;
 		type = "snowflake";
 	
 		_cradleAngle = 	HXP.random*20;
@@ -76,14 +73,14 @@ class Snowflake extends NapeEntity
 			_cradleDirection = false;
 		}
 
-		_flickerTimer = 0;
 
 		var _body = new Body(BodyType.DYNAMIC);
-		_body.shapes.add(new Circle(_myLayer*4+5));
+		var _circle = new Circle(_myLayer*4+5);
+		_circle.material.elasticity = 0.5;	
+		_circle.material.density = 1;
+		_circle.material.staticFriction=0;
+		_body.shapes.add(_circle);
 		_body.position.setxy(_x,_y);
-		_body.isBullet = true;
-		_body.surfaceVel = new Vec2(0,-20);
-		_body.velocity = new Vec2(0,20);
 		//_body.angularVel = 0.5;
 		body = _body;
 
@@ -94,20 +91,8 @@ class Snowflake extends NapeEntity
 
 	public override function update()
 	{
-
 		super.update();
-		if ( y > HXP.height	)
-		{
-			HXP.scene.remove(this);
-		}
-
 
 	}
 
-	private function get_flickering():Bool
-	{
-		if (_flickerTimer > 0)
-			return true;
-		return false;
-	}		
 }

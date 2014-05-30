@@ -30,7 +30,7 @@ class MainScene extends NapeScene
 		super();
 		ismoving = true;
 
-		var gravity = Vec2.weak(0,300);
+		var gravity = Vec2.weak(0,800);
 
 		var _w = HXP.stage.stageWidth;
 		var _h = HXP.stage.stageHeight;
@@ -47,26 +47,30 @@ class MainScene extends NapeScene
 
 		floor.space = space;
 
+		var _i : Int;
 
+		for (i in 1...50)	
+		{
+			var _x = Math.random()*HXP.width;
+			var _y = 0;
 
+			addNapeEntity(new Snowflake(_x,_y));
+
+		}
+		
 
 	}
 
 	public override function update()
 	{
-		spawnTimer -= HXP.elapsed;
-		if (spawnTimer < 0)
-		{
-			spawn();
-		}
+
+		super.update();	
 
 		if (Input.mousePressed)
 		{
-			var bodyList = new BodyList();
-			bodyList.clear();
+			HXP.scene = new MainScene(); 
 		}
 
-		super.update();
 
 	}
 
@@ -74,17 +78,9 @@ class MainScene extends NapeScene
 	{
 		 var _x : Float;
 		 var _y : Float;
+		 var _i:Int; 
 		 var _entcount = HXP.scene.count;
 		 	
-		_x = Math.random()*HXP.width;
-		_y = -10;
-
-		if (_entcount < 50)
-		{	
-			addNapeEntity(new Snowflake(_x,_y));
-			spawnTimer = 0.05;
-		}
-
 
 	}
 

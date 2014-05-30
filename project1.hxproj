@@ -23,7 +23,7 @@
     <option directives="tools=1.2.1&#xA;openfl=1.2.3&#xA;display&#xA;web" />
     <option flashStrict="False" />
     <option mainClass="ApplicationMain" />
-    <option enabledebug="False" />
+    <option enabledebug="True" />
     <option additional="--no-output&#xA;-swf-version 11.2" />
   </build>
   <!-- haxelib libraries -->

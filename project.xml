@@ -15,6 +15,10 @@
 	<haxelib name="HaxePunk-nape" />
 	<haxelib name="nape" />
 
+	<haxedef name="no-inline" if="neko" />
+
+	<compilerflag name="-debug" />
+
 	<assets path="assets/graphics" rename="graphics" include="*.png|*.jpg" />
 	<assets path="assets/audio" rename="audio" include="*.mp3" if="flash" />
 	<assets path="assets/audio" rename="audio" include="*.wav|*.ogg" unless="flash" />
